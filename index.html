@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>色林错湖区年降水量与湖泊面积变化对比</title>
+    <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        #chart {
+            width: 100%;
+            height: 600px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #95a5a6;
+            padding-top: 15px;
+            border-top: 1px solid #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>色林错湖区年降水量与湖泊面积变化对比 (2000-2024)</h1>
+    <p class="subtitle">西藏自治区色林错湖区降水量与湖泊面积变化趋势对比</p>
+
+    <div id="chart"></div>
+
+    <div class="footer">
+        <p>数据来源: 立方数据学社 | 可视化工具: Plotly.js</p>
+        <p>© 2023 数据可视化项目</p>
+    </div>
+</div>
+
+<script>
+    // 准备数据
+    const years = [2000, 2004, 2008, 2012, 2016, 2020, 2024];
+
+    // 降水量数据（柱状图）- 更新为最新数据
+    const precipitationData = [358.535, 356.899, 360.851, 371.436, 379.157, 387.845, 396.733];
+
+    // 湖泊面积数据（折线图）
+    const areaData = [1951.29, 2137.09, 2253.11, 2339.36, 2340.91, 2393.35, 2391.55];
+
+    // 创建降水量柱状图（使用 RGB 141,205,213）
+    const precipitationTrace = {
+        x: years,
+        y: precipitationData,
+        type: 'bar',
+        name: '降水量 (mm)',
+        marker: {
+            color: 'rgb(141,205,213)',
+            opacity: 0.8,
+            line: {
+                width: 1,
+                color: 'rgb(121,185,193)'
+            }
+        },
+        yaxis: 'y',
+        hovertemplate: '<b>年份</b>: %{x}<br><b>降水量</b>: %{y:.2f} mm<extra></extra>'
+    };
+
+    // 创建湖泊面积折线图（使用 RGB 230,132,109）
+    const areaTrace = {
+        x: years,
+        y: areaData,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: '湖泊面积 (km²)',
+        line: {
+            color: 'rgb(230,132,109)',
+            width: 3,
+            shape: 'spline'
+        },
+        marker: {
+            size: 8,
+            color: 'rgb(210,112,89)'
+        },
+        yaxis: 'y2',
+        hovertemplate: '<b>年份</b>: %{x}<br><b>湖泊面积</b>: %{y:.2f} km²<extra></extra>'
+    };
+
+    // 设置图表布局
+    const layout = {
+        title: {
+            text: '色林错湖区年降水量与湖泊面积变化趋势对比',
+            font: {
+                size: 20,
+                family: 'Microsoft YaHei'
+            }
+        },
+        xaxis: {
+            title: '年份',
+            tickmode: 'array',
+            tickvals: years,
+            gridcolor: '#ecf0f1'
+        },
+        yaxis: {
+            title: '降水量 (mm)',
+            titlefont: {color: 'rgb(141,205,213)'},
+            tickfont: {color: 'rgb(141,205,213)'},
+            gridcolor: '#ecf0f1',
+            position: 0
+        },
+        yaxis2: {
+            title: '湖泊面积 (km²)',
+            titlefont: {color: 'rgb(230,132,109)'},
+            tickfont: {color: 'rgb(230,132,109)'},
+            overlaying: 'y',
+            side: 'right',
+            gridcolor: 'rgba(0,0,0,0)'
+        },
+        hovermode: 'x unified',
+        showlegend: true,
+        legend: {
+            orientation: 'h',
+            y: -0.2,
+            x: 0.5,
+            xanchor: 'center'
+        },
+        margin: {
+            l: 60,
+            r: 60,
+            t: 80,
+            b: 80
+        },
+        plot_bgcolor: '#ffffff',
+        paper_bgcolor: '#ffffff',
+        font: {
+            family: 'Microsoft YaHei, Arial'
+        },
+        barmode: 'group'
+    };
+
+    const config = {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        scrollZoom: true,
+        locale: 'zh-CN'
+    };
+
+    // 渲染图表
+    Plotly.newPlot('chart', [precipitationTrace, areaTrace], layout, config);
+</script>
+</body>
+</html>
